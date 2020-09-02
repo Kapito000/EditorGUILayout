@@ -10,6 +10,8 @@ public class CustomComponentEditor : Editor
     CustomComponent cc;
     GUIStyle style;
 
+    int spase = 5;
+
     private void OnEnable()
     {
         cc = (CustomComponent)target;
@@ -34,6 +36,9 @@ public class CustomComponentEditor : Editor
             BeginFoldoutHeaderGroup();
             BeginHorizontal();
             BeginScrollView();
+            BeginToggleGroup();
+            BeginVertical();
+            BoundsField();
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -51,8 +56,6 @@ public class CustomComponentEditor : Editor
     bool bfg = false;
     void BeginFadeGroup()
     {
-        EditorGUILayout.LabelField("BeginFadeGroup:", style);
-
         bfg = EditorGUILayout.BeginFoldoutHeaderGroup(bfg, "BeginFadeGroup:");
         if (bfg)
         {
@@ -72,15 +75,13 @@ public class CustomComponentEditor : Editor
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        EditorGUILayout.Space(10);
+        EditorGUILayout.Space(spase);
     }
 
     bool BFHG = false;
     string status = "Open";
     void BeginFoldoutHeaderGroup()
     {
-        EditorGUILayout.LabelField("BeginFoldoutHeaderGroup:", style);
-
         BFHG = EditorGUILayout.BeginFoldoutHeaderGroup(BFHG, status);
         if (BFHG)
         {
@@ -93,14 +94,12 @@ public class CustomComponentEditor : Editor
         else status = "Close";
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        EditorGUILayout.Space(10);
+        EditorGUILayout.Space(spase);
     }
 
     bool bh = false;
     void BeginHorizontal()
     {
-        EditorGUILayout.LabelField("BeginHorizontal:", style);
-
         bh = EditorGUILayout.BeginFoldoutHeaderGroup(bh, "BeginHorizontal");
         if (bh)
         {
@@ -116,15 +115,13 @@ public class CustomComponentEditor : Editor
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        EditorGUILayout.Space(10);
+        EditorGUILayout.Space(spase);
     }
 
     Vector2 scrollPosition = new Vector2(50, 50);
     bool bsv = false;
     void BeginScrollView()
     {
-        EditorGUILayout.LabelField("BeginScrollView:", style);
-
         bsv = EditorGUILayout.BeginFoldoutHeaderGroup(bsv, "BeginScrollView");
         if (bsv)
         {
@@ -149,7 +146,61 @@ public class CustomComponentEditor : Editor
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        EditorGUILayout.Space(10);
+        EditorGUILayout.Space(spase);
+    }
+
+    bool BTG = false;
+    bool btg = false;
+    void BeginToggleGroup()
+    {
+        btg = EditorGUILayout.BeginFoldoutHeaderGroup(btg, "BeginToggleGroup:");
+        if (btg)
+        {
+            BTG = EditorGUILayout.BeginToggleGroup("BeginToggleGroup:", BTG);
+
+            cc.a = EditorGUILayout.IntField(cc.a); // Для "public" полей.
+            cc.a = EditorGUILayout.IntField(cc.a); // Для "public" полей.
+            serializedObject.FindProperty("b").intValue = EditorGUILayout.IntField(serializedObject.FindProperty("b").intValue); // // Для "[SerializeField]" полей.
+            serializedObject.FindProperty("b").intValue = EditorGUILayout.IntField(serializedObject.FindProperty("b").intValue); // // Для "[SerializeField]" полей.
+
+            EditorGUILayout.EndToggleGroup();
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    bool bv = false;
+    void BeginVertical()
+    {
+        bv = EditorGUILayout.BeginFoldoutHeaderGroup(bv, "BeginVertical:");
+        if (bv)
+        {
+            EditorGUILayout.BeginVertical("box");
+
+            GUILayout.Label("BeginVertical");
+            GUILayout.Label("BeginVertical");
+            GUILayout.Label("BeginVertical");
+
+            EditorGUILayout.EndVertical();
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    Bounds Bounds;
+    bool bf = false;
+    void BoundsField()
+    {
+        bf = EditorGUILayout.BeginFoldoutHeaderGroup(bf, "BoundsField");
+        if (bf)
+        {
+            Bounds = EditorGUILayout.BoundsField("BoundsField", Bounds);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
     }
     #endregion
 }

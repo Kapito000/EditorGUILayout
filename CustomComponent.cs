@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class CustomComponent : MonoBehaviour
 {
-    [SerializeField] int a;
-    public int aa;
-    [SerializeField] string b;
+    public int a;
+    [SerializeField] int b;
 }

@@ -39,6 +39,10 @@ public class CustomComponentEditor : Editor
             BeginToggleGroup();
             BeginVertical();
             BoundsField();
+            ColorField();
+            CurveField();
+            DelayedDoubleField();
+            DelayedTextField();
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -197,6 +201,62 @@ public class CustomComponentEditor : Editor
         if (bf)
         {
             Bounds = EditorGUILayout.BoundsField("BoundsField", Bounds);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    Color color;
+    bool cf = false;
+    void ColorField()
+    {
+        cf = EditorGUILayout.BeginFoldoutHeaderGroup(cf, "ColorField");
+        if (cf)
+        {
+            color = EditorGUILayout.ColorField("ColorField", color);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    AnimationCurve animationCurve;
+    bool cF = false;
+    void CurveField()
+    {
+        cF = EditorGUILayout.BeginFoldoutHeaderGroup(cF, "CurveField");
+        if (cF)
+        {
+            animationCurve = EditorGUILayout.CurveField("CurveField", animationCurve);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    double delayedDoubleField;
+    bool ddf = false;
+    void DelayedDoubleField()
+    {
+        ddf = EditorGUILayout.BeginFoldoutHeaderGroup(ddf, "DelayedDoubleField");
+        if (ddf)
+        {
+            delayedDoubleField = EditorGUILayout.DelayedDoubleField("DelayedDoubleField", delayedDoubleField);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    string delayedTextField;
+    bool dtf = false;
+    void DelayedTextField()
+    {
+        dtf = EditorGUILayout.BeginFoldoutHeaderGroup(dtf, "DelayedTextField");
+        if (dtf)
+        {
+            delayedTextField = EditorGUILayout.DelayedTextField("DelayedTextField", delayedTextField);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

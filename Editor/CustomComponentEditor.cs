@@ -49,6 +49,7 @@ public class CustomComponentEditor : Editor
             #endregion
             #region 2)
             EnumFlagsField();
+            EnumPopup();
             #endregion
         }
 
@@ -320,7 +321,7 @@ public class CustomComponentEditor : Editor
     #endregion
 
     #region 2)
-    enum EnumsFlags 
+    enum EnumsFlags
     {
         None = 0, // Custom name for "Nothing" option
         A = 1 << 0,
@@ -357,6 +358,17 @@ public class CustomComponentEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
 
         EditorGUILayout.Space(spase);
+    }
+
+    bool ep = false;
+    void EnumPopup()
+    {
+        ep = EditorGUILayout.BeginFoldoutHeaderGroup(ep, "EnumPopup");
+        if (ep)
+        {
+
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
     }
     #endregion
 

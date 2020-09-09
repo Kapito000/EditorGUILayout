@@ -32,6 +32,7 @@ public class CustomComponentEditor : Editor
 
         // Примеры.
         {
+            #region 1)
             BeginFadeGroup();
             BeginFoldoutHeaderGroup();
             BeginHorizontal();
@@ -43,6 +44,12 @@ public class CustomComponentEditor : Editor
             CurveField();
             DelayedDoubleField();
             DelayedTextField();
+            DropdownButton();
+            EditorToolbar();
+            #endregion
+            #region 2)
+            EnumFlagsField();
+            #endregion
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -55,7 +62,9 @@ public class CustomComponentEditor : Editor
         }
     }
 
-    #region
+    #region 
+
+    #region 1)
     float BFG = 1f;
     bool bfg = false;
     void BeginFadeGroup()
@@ -243,6 +252,7 @@ public class CustomComponentEditor : Editor
         if (ddf)
         {
             delayedDoubleField = EditorGUILayout.DelayedDoubleField("DelayedDoubleField", delayedDoubleField);
+            delayedDoubleField = EditorGUILayout.DoubleField("DoubleField", delayedDoubleField);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
@@ -257,10 +267,98 @@ public class CustomComponentEditor : Editor
         if (dtf)
         {
             delayedTextField = EditorGUILayout.DelayedTextField("DelayedTextField", delayedTextField);
+
+            delayedTextField = EditorGUILayout.TextField("TextField", delayedTextField);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
         EditorGUILayout.Space(spase);
     }
+
+    bool db = false;
+    void DropdownButton()
+    {
+        db = EditorGUILayout.BeginFoldoutHeaderGroup(db, "DropdownButton");
+        if (db)
+        {
+            EditorGUILayout.LabelField("Не разобрался как работает (((");
+            EditorGUILayout.LabelField("Везде используют \"Popup\"");
+
+            if (EditorGUILayout.DropdownButton(new GUIContent("1", "ad"), FocusType.Keyboard))
+            {
+                var r = GUILayoutUtility.GetLastRect();
+                var f = new GenericMenu();
+                r.x += 50;
+                f.AddDisabledItem(new GUIContent("1"));
+                f.AddDisabledItem(new GUIContent("2"));
+                f.AddDisabledItem(new GUIContent("3"));
+
+                f.DropDown(r);
+            }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    bool et = false;
+    void EditorToolbar()
+    {
+        et = EditorGUILayout.BeginFoldoutHeaderGroup(et, "EditorToolbar");
+        if (et)
+        {
+
+            EditorGUILayout.LabelField("Большая тема.");
+            EditorGUILayout.LabelField("Необходимо отдельно создавть \"EditorTools\".");
+            //  EditorGUILayout.EditorToolbar(new tool);
+
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+    #endregion
+
+    #region 2)
+    enum EnumsFlags 
+    {
+        None = 0, // Custom name for "Nothing" option
+        A = 1 << 0,
+        B = 1 << 1,
+        AB = A | B, // Combination of two flags
+        C = 1 << 2,
+        All = ~0, // Custom name for "Everything" option
+    }
+    enum EnumFlags_1
+    {
+        a = 1 << 1,
+        b = 1 << 2,
+        c = 1 << 3,
+    }
+    EnumsFlags EFlag;
+    EnumFlags_1 eFlag;
+    bool eff = false;
+    void EnumFlagsField()
+    {
+        eff = EditorGUILayout.BeginFoldoutHeaderGroup(eff, "EnumFlagsField");
+        if (eff)
+        {
+            EditorGUILayout.LabelField("Битовая маска.");
+
+            var content = new GUIContent("EnumFlagsField");
+
+            EFlag = (EnumsFlags)EditorGUILayout.EnumFlagsField(content, EFlag);
+            EditorGUILayout.LabelField(EFlag.ToString());
+            EditorGUILayout.Space();
+
+            eFlag = (EnumFlags_1)EditorGUILayout.EnumFlagsField(content, eFlag);
+            EditorGUILayout.LabelField(eFlag.ToString());
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+    #endregion
+
     #endregion
 }

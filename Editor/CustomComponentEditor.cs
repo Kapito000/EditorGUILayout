@@ -50,6 +50,7 @@ public class CustomComponentEditor : Editor
             #region 2)
             EnumFlagsField();
             EnumPopup();
+            Foldout();
             #endregion
         }
 
@@ -360,15 +361,45 @@ public class CustomComponentEditor : Editor
         EditorGUILayout.Space(spase);
     }
 
+    enum EnumPopupEn
+    { first, second, treeth }
+    EnumPopupEn enumPopupEn;
     bool ep = false;
     void EnumPopup()
     {
         ep = EditorGUILayout.BeginFoldoutHeaderGroup(ep, "EnumPopup");
         if (ep)
         {
-
+            enumPopupEn = (EnumPopupEn)EditorGUILayout.EnumPopup("EnumPopup", enumPopupEn);
+            EditorGUILayout.TextField(enumPopupEn.ToString());
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    bool Fol = false;
+    bool f = false;
+    void Foldout()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        f = EditorGUILayout.BeginFoldoutHeaderGroup(f, "Foldout");
+        if (f)
+        {
+            EditorGUI.indentLevel++;
+            Fol = EditorGUILayout.Foldout(Fol, "Foldout");
+            if (Fol)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.TextField("Foldout");
+                EditorGUILayout.TextField("Foldout");
+                EditorGUI.indentLevel = indent;
+            }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
     }
     #endregion
 

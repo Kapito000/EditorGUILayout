@@ -51,6 +51,9 @@ public class CustomComponentEditor : Editor
             EnumFlagsField();
             EnumPopup();
             Foldout();
+            GetControlRect();
+            GradientField();
+            HelpBox();
             #endregion
         }
 
@@ -396,6 +399,62 @@ public class CustomComponentEditor : Editor
                 EditorGUILayout.TextField("Foldout");
                 EditorGUI.indentLevel = indent;
             }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.Space(spase);
+    }
+
+    bool gcr = false;
+    void GetControlRect()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        gcr = EditorGUILayout.BeginFoldoutHeaderGroup(gcr, "GetControlRect");
+        if (gcr)
+        {
+            EditorGUI.indentLevel++;
+
+            var rect = EditorGUILayout.GetControlRect();
+            EditorGUILayout.LabelField("???");
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    Gradient gradient;
+    bool gf = false;
+    void GradientField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        gf = EditorGUILayout.BeginFoldoutHeaderGroup(gf, "GradientField");
+        if (gf)
+        {
+            EditorGUI.indentLevel++;
+
+            gradient = EditorGUILayout.GradientField("Gradient", gradient);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    bool hb = false;
+    void HelpBox()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        hb = EditorGUILayout.BeginFoldoutHeaderGroup(hb, "HelpBox");
+        if (hb)
+        {
+            EditorGUILayout.HelpBox("HelpBox", MessageType.None);
+            EditorGUILayout.HelpBox("HelpBox", MessageType.Info);
+            EditorGUILayout.HelpBox("HelpBox", MessageType.Warning);
+            EditorGUILayout.HelpBox("HelpBox", MessageType.Error);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

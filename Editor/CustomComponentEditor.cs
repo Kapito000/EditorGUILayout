@@ -59,6 +59,7 @@ public class CustomComponentEditor : Editor
             #region 3)
             IntPopup();
             IntSlider();
+            LayerField();
             #endregion
         }
 
@@ -548,6 +549,25 @@ public class CustomComponentEditor : Editor
             SerializedObject obj = serializedObject;
             SerializedProperty prop = obj.FindProperty("a");
             prop.intValue = EditorGUILayout.IntSlider("IntSlider", prop.intValue, 1, 100);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    int LayerLF = 0;
+    bool lf = false;
+    void LayerField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        lf = EditorGUILayout.BeginFoldoutHeaderGroup(lf, "LayerField");
+        if (lf)
+        {
+            EditorGUI.indentLevel++;
+
+            LayerLF = EditorGUILayout.LayerField("LayerField", LayerLF);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

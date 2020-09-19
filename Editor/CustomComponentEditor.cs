@@ -56,6 +56,10 @@ public class CustomComponentEditor : Editor
             HelpBox();
             InspectorTitlebar();
             #endregion
+            #region 3)
+            IntPopup();
+            IntSlider();
+            #endregion
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -505,8 +509,51 @@ public class CustomComponentEditor : Editor
     {
         return new Quaternion(v4.x, v4.y, v4.z, v4.w);
     }
+    #endregion
 
+    #region 3)
+    int SelectIP;
+    string[] Names = new string[] { "Normal", "Double", "Quadruple" };
+    int[] Sizes = { 1, 2, 4 };
+    bool ip = false;
+    void IntPopup()
+    {
+        var indent = EditorGUI.indentLevel;
 
+        ip = EditorGUILayout.BeginFoldoutHeaderGroup(ip, "IntPopup");
+        if (ip)
+        {
+            EditorGUI.indentLevel++;
+
+            SelectIP = EditorGUILayout.IntPopup("IntPopup", SelectIP, Names, Sizes);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    int ISValue = 50;
+    bool iS = false;
+    void IntSlider()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        iS = EditorGUILayout.BeginFoldoutHeaderGroup(iS, "IntSlider");
+        if (iS)
+        {
+            EditorGUI.indentLevel++;
+
+            ISValue = EditorGUILayout.IntSlider("IntSlider", ISValue, 1, 100);
+            SerializedObject obj = serializedObject;
+            SerializedProperty prop = obj.FindProperty("a");
+            prop.intValue = EditorGUILayout.IntSlider("IntSlider", prop.intValue, 1, 100);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
     #endregion
 
     #endregion

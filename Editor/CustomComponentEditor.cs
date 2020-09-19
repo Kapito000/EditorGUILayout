@@ -60,6 +60,7 @@ public class CustomComponentEditor : Editor
             IntPopup();
             IntSlider();
             LayerField();
+            MaskField();
             #endregion
         }
 
@@ -568,6 +569,31 @@ public class CustomComponentEditor : Editor
             EditorGUI.indentLevel++;
 
             LayerLF = EditorGUILayout.LayerField("LayerField", LayerLF);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    int Flags = 0;
+    string[] options = new string[] { "CanJump", "CanShoot", "CanSwim" };
+    bool mf = false;
+    void MaskField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        mf = EditorGUILayout.BeginFoldoutHeaderGroup(mf, "MaskField");
+        if (mf)
+        {
+            EditorGUI.indentLevel++;
+
+            Flags = EditorGUILayout.MaskField("MaskField", Flags, options);
+
+            if (GUILayout.Button("Показать значение флага."))
+            {
+                Debug.Log(Flags);
+            }
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

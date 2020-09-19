@@ -54,6 +54,7 @@ public class CustomComponentEditor : Editor
             GetControlRect();
             GradientField();
             HelpBox();
+            InspectorTitlebar();
             #endregion
         }
 
@@ -460,6 +461,52 @@ public class CustomComponentEditor : Editor
 
         EditorGUILayout.Space(spase);
     }
+
+    bool IT = false;
+    Transform transformIT;
+    Vector4 rotationComponents;
+    bool it = false;
+    void InspectorTitlebar()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        if (Selection.activeGameObject)
+        {
+            var transformIT = Selection.activeGameObject.transform;
+
+            it = EditorGUILayout.BeginFoldoutHeaderGroup(it, "InspectorTitlebar");
+            if (it)
+            {
+                EditorGUI.indentLevel++;
+
+                IT = EditorGUILayout.InspectorTitlebar(IT, transformIT);
+                if (IT)
+                {
+                    transformIT.position = EditorGUILayout.Vector3Field("Position", transformIT.position);
+                    EditorGUILayout.Space();
+                    rotationComponents = EditorGUILayout.Vector4Field("Detailed Rotation", QuaternionToVector4(transformIT.localRotation));
+                    EditorGUILayout.Space();
+                    transformIT.localScale = EditorGUILayout.Vector3Field("Scale", transformIT.localScale);
+                }
+
+                transformIT.localRotation = ConvertToQuaternion(rotationComponents);
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+    Vector4 QuaternionToVector4(Quaternion q)
+    {
+        return new Vector4(q.x, q.y, q.z, q.w);
+    }
+    Quaternion ConvertToQuaternion(Vector4 v4)
+    {
+        return new Quaternion(v4.x, v4.y, v4.z, v4.w);
+    }
+
+
     #endregion
 
     #endregion

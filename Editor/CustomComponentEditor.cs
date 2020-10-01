@@ -72,6 +72,7 @@ public class CustomComponentEditor : Editor
             RectIntField();
             SelectableLabel();
             Slider();
+            TagField();
             #endregion
         }
 
@@ -800,6 +801,23 @@ public class CustomComponentEditor : Editor
         if (s)
         {
             SliderValue = EditorGUILayout.Slider("Slider: ", SliderValue, liftValue, rightValue);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    string seletedTag = "nonTag";
+    bool tf = false;
+    void TagField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        tf = EditorGUILayout.BeginFoldoutHeaderGroup(tf, "TagField");
+        if (tf)
+        {
+            seletedTag = EditorGUILayout.TagField("TagField", seletedTag);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

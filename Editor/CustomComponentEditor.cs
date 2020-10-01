@@ -61,6 +61,17 @@ public class CustomComponentEditor : Editor
             IntSlider();
             LayerField();
             MaskField();
+            MinMaxSlider();
+            PasswordField();
+            Popup();
+            PrefixLabel();
+            #endregion
+            #region 4)
+            PropertyField();
+            RectField();
+            RectIntField();
+            SelectableLabel();
+            Slider();
             #endregion
         }
 
@@ -330,7 +341,6 @@ public class CustomComponentEditor : Editor
         EditorGUILayout.Space(spase);
     }
     #endregion
-
     #region 2)
     enum EnumsFlags
     {
@@ -512,7 +522,6 @@ public class CustomComponentEditor : Editor
         return new Quaternion(v4.x, v4.y, v4.z, v4.w);
     }
     #endregion
-
     #region 3)
     int SelectIP;
     string[] Names = new string[] { "Normal", "Double", "Quadruple" };
@@ -594,6 +603,203 @@ public class CustomComponentEditor : Editor
             {
                 Debug.Log(Flags);
             }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    float mmsMinValue = 5;
+    float mmsMaxValue = 50;
+    float mmsMinLimit = 0;
+    float mmsMaxLimit = 100;
+    bool mms = false;
+    void MinMaxSlider()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        mms = EditorGUILayout.BeginFoldoutHeaderGroup(mms, "MinMaxSlider");
+        if (mms)
+        {
+            EditorGUI.indentLevel++;
+
+            mmsMinLimit = EditorGUILayout.FloatField("MinLimit", mmsMinLimit);
+            mmsMaxLimit = EditorGUILayout.FloatField("MaxLimit", mmsMaxLimit);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.MinMaxSlider("MinMaxSlider", ref mmsMinValue, ref mmsMaxValue, mmsMinLimit, mmsMaxLimit);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField($"MinLimit: {mmsMinLimit}");
+            EditorGUILayout.LabelField($"MaxLimit: {mmsMaxLimit}");
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField($"MinValue: {mmsMinValue}");
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    string pfPassword;
+    bool pf = false;
+    void PasswordField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        pf = EditorGUILayout.BeginFoldoutHeaderGroup(pf, "PasswordField");
+        if (pf)
+        {
+            EditorGUI.indentLevel++;
+
+            pfPassword = EditorGUILayout.PasswordField("PasswordField", pfPassword);
+            EditorGUILayout.LabelField("PasswordField: ", pfPassword);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    string[] optionsP = new string[] { "CanJump", "CanShoot", "CanSwim" };
+    int curetIndexP = 0;
+    bool p = false;
+    void Popup()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        p = EditorGUILayout.BeginFoldoutHeaderGroup(p, "Popup");
+        if (p)
+        {
+            EditorGUI.indentLevel++;
+
+            curetIndexP = EditorGUILayout.Popup("Popup", curetIndexP, optionsP);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    bool pl = false;
+    void PrefixLabel()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        pl = EditorGUILayout.BeginFoldoutHeaderGroup(pl, "PrefixLabel");
+        if (pl)
+        {
+            EditorGUI.indentLevel++;
+
+            EditorGUILayout.LabelField("C использованием PrefixLabel.");
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("\"PrefixLabel:\" ");
+            EditorGUILayout.IntField(14);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Обычный \"LabelField\".");
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("\"PrefixLabel:\" ");
+            EditorGUILayout.IntField(14);
+            EditorGUILayout.EndHorizontal();
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    #endregion
+    #region 4)
+    SerializedProperty SP;
+    bool pF = false;
+    void PropertyField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        pF = EditorGUILayout.BeginFoldoutHeaderGroup(pF, "PropertyField");
+        if (pF)
+        {
+            SP = serializedObject.FindProperty("l");
+            EditorGUILayout.PropertyField(SP);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    Rect rfRect;
+    bool rf = false;
+    void RectField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        rf = EditorGUILayout.BeginFoldoutHeaderGroup(rf, "RectField");
+        if (rf)
+        {
+            rfRect = EditorGUILayout.RectField("RectField", rfRect);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    RectInt rifRect;
+    bool rif = false;
+    void RectIntField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        rif = EditorGUILayout.BeginFoldoutHeaderGroup(rif, "RectIntField");
+        if (rif)
+        {
+            rifRect = EditorGUILayout.RectIntField("RectIntField", rifRect);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    bool sl = false;
+    void SelectableLabel()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        sl = EditorGUILayout.BeginFoldoutHeaderGroup(sl, "SelectableLabel");
+        if (sl)
+        {
+            EditorGUILayout.SelectableLabel("Текст меток можно скопировать \"ctrl+c - ctrl+v\".");
+            EditorGUILayout.SelectableLabel("SelectableLabel");
+            EditorGUILayout.SelectableLabel("SelectableLabel");
+            EditorGUILayout.SelectableLabel("SelectableLabel");
+            EditorGUILayout.LabelField("Simple LabelField");
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    float SliderValue = 50;
+    float liftValue = 0;
+    float rightValue = 100;
+    bool s = false;
+    void Slider()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        s = EditorGUILayout.BeginFoldoutHeaderGroup(s, "Slider");
+        if (s)
+        {
+            SliderValue = EditorGUILayout.Slider("Slider: ", SliderValue, liftValue, rightValue);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

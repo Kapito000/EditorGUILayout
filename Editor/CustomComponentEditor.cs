@@ -73,17 +73,23 @@ public class CustomComponentEditor : Editor
             SelectableLabel();
             Slider();
             TagField();
+            TextArea();
+            TextField();
+            #endregion
+            #region 5)
+            Toggle();
+            ToggleLeft();
             #endregion
         }
 
         serializedObject.ApplyModifiedProperties();
 
         // Загрязнение сцены.
-        if (GUI.changed)
-        {
-            EditorUtility.SetDirty(cc.gameObject);
-            EditorSceneManager.MarkSceneDirty(cc.gameObject.scene);
-        }
+        //if (GUI.changed)
+        //{
+        //    EditorUtility.SetDirty(cc.gameObject);
+        //    EditorSceneManager.MarkSceneDirty(cc.gameObject.scene);
+        //}
     }
 
     #region 
@@ -818,6 +824,79 @@ public class CustomComponentEditor : Editor
         if (tf)
         {
             seletedTag = EditorGUILayout.TagField("TagField", seletedTag);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    string TextA = "TextArea";
+    bool ta = false;
+    void TextArea()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        ta = EditorGUILayout.BeginFoldoutHeaderGroup(ta, "TextArea");
+        if (ta)
+        {
+            TextA = EditorGUILayout.TextArea(TextA);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    string TextF;
+    bool Tf = false;
+    void TextField()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        Tf = EditorGUILayout.BeginFoldoutHeaderGroup(Tf, "TextField");
+        if (Tf)
+        {
+            TextF = EditorGUILayout.TextField("TextField", TextF);
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+    #endregion
+    #region 5)
+    bool ToggleB = false;
+    bool t = false;
+    void Toggle()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        t = EditorGUILayout.BeginFoldoutHeaderGroup(t, "Toggle");
+        if (t)
+        {
+            ToggleB = EditorGUILayout.Toggle("Toggle", ToggleB);
+            if (ToggleB) EditorGUILayout.LabelField("Enable.");
+            else EditorGUILayout.LabelField("Desable.");
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    bool ToggleL = false;
+    bool tl = false;
+    void ToggleLeft()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        tl = EditorGUILayout.BeginFoldoutHeaderGroup(tl, "ToggleLeft");
+        if (tl)
+        {
+            ToggleL = EditorGUILayout.ToggleLeft("ToggleLeft", ToggleL);
+            if (ToggleL) EditorGUILayout.LabelField("Enable.");
+            else EditorGUILayout.LabelField("Desable.");
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 

@@ -79,17 +79,18 @@ public class CustomComponentEditor : Editor
             #region 5)
             Toggle();
             ToggleLeft();
+            VectorFields();
             #endregion
         }
 
         serializedObject.ApplyModifiedProperties();
 
         // Загрязнение сцены.
-        //if (GUI.changed)
-        //{
-        //    EditorUtility.SetDirty(cc.gameObject);
-        //    EditorSceneManager.MarkSceneDirty(cc.gameObject.scene);
-        //}
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(cc.gameObject);
+            EditorSceneManager.MarkSceneDirty(cc.gameObject.scene);
+        }
     }
 
     #region 
@@ -897,6 +898,31 @@ public class CustomComponentEditor : Editor
             ToggleL = EditorGUILayout.ToggleLeft("ToggleLeft", ToggleL);
             if (ToggleL) EditorGUILayout.LabelField("Enable.");
             else EditorGUILayout.LabelField("Desable.");
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUI.indentLevel = indent;
+        EditorGUILayout.Space(spase);
+    }
+
+    Vector2 vector2;
+    Vector2Int vector2Int;
+    Vector3 vector3;
+    Vector3Int vector3Int;
+    Vector4 vector4;
+    bool vf = false;
+    void VectorFields()
+    {
+        var indent = EditorGUI.indentLevel;
+
+        vf = EditorGUILayout.BeginFoldoutHeaderGroup(vf, "Vector fields");
+        if (vf)
+        {
+            vector2 = EditorGUILayout.Vector2Field("Vector2Field", vector2);
+            vector2Int = EditorGUILayout.Vector2IntField("Vector2IntField", vector2Int);
+            vector3 = EditorGUILayout.Vector3Field("Vector3Field(", vector3);
+            vector3Int = EditorGUILayout.Vector3IntField("Vector3IntField", vector3Int);
+            vector4 = EditorGUILayout.Vector4Field("Vector4Field", vector4);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
